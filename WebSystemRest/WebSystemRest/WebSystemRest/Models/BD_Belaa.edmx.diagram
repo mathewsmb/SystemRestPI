@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30575806bbe6443493bb94e41652aa29" Name="Diagram1">
+        <EntityTypeShape EntityType="BD_BelaaModel.logueo" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_BelaaModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_BelaaModel.tb_ingredientes" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_BelaaModel.tb_medida" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_BelaaModel.tb_menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_BelaaModel.tb_plato" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_BelaaModel.tb_receta" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_BelaaModel.tb_tipo" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="BD_BelaaModel.FK__tb_ingred__id_me__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_BelaaModel.FK__tb_receta__id_in__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_BelaaModel.FK__tb_plato__id_tip__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_BelaaModel.FK__tb_receta__id_pl__20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_BelaaModel.tb_detalleMenu" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

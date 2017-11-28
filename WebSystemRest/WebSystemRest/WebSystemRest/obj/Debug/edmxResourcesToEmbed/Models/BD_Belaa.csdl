@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BD_BelaaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="logueo">
+    <Key>
+      <PropertyRef Name="usuario" />
+    </Key>
+    <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="clave" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tb_ingredientes">
+    <Key>
+      <PropertyRef Name="id_ing" />
+    </Key>
+    <Property Name="id_ing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="desc_ing" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="stock_ing" Type="Int32" Nullable="false" />
+    <Property Name="costo_ing" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="id_med" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_medida" Relationship="Self.FK__tb_ingred__id_me__1273C1CD" FromRole="tb_ingredientes" ToRole="tb_medida" />
+    <NavigationProperty Name="tb_receta" Relationship="Self.FK__tb_receta__id_in__21B6055D" FromRole="tb_ingredientes" ToRole="tb_receta" />
+  </EntityType>
+  <EntityType Name="tb_medida">
+    <Key>
+      <PropertyRef Name="id_med" />
+    </Key>
+    <Property Name="id_med" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="desc_med" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tb_ingredientes" Relationship="Self.FK__tb_ingred__id_me__1273C1CD" FromRole="tb_medida" ToRole="tb_ingredientes" />
+  </EntityType>
+  <EntityType Name="tb_menu">
+    <Key>
+      <PropertyRef Name="id_menu" />
+    </Key>
+    <Property Name="id_menu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cant_menu" Type="Int32" Nullable="false" />
+    <Property Name="fec_menu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tiempoTotal_menu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tb_plato" Relationship="Self.tb_detalleMenu" FromRole="tb_menu" ToRole="tb_plato" />
+  </EntityType>
+  <EntityType Name="tb_plato">
+    <Key>
+      <PropertyRef Name="id_plato" />
+    </Key>
+    <Property Name="id_plato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nom_plato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_tipo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_tipo" Relationship="Self.FK__tb_plato__id_tip__173876EA" FromRole="tb_plato" ToRole="tb_tipo" />
+    <NavigationProperty Name="tb_receta" Relationship="Self.FK__tb_receta__id_pl__20C1E124" FromRole="tb_plato" ToRole="tb_receta" />
+    <NavigationProperty Name="tb_menu" Relationship="Self.tb_detalleMenu" FromRole="tb_plato" ToRole="tb_menu" />
+  </EntityType>
+  <EntityType Name="tb_receta">
+    <Key>
+      <PropertyRef Name="id_plato" />
+      <PropertyRef Name="id_ing" />
+    </Key>
+    <Property Name="id_plato" Type="Int32" Nullable="false" />
+    <Property Name="id_ing" Type="Int32" Nullable="false" />
+    <Property Name="rec_cantidad" Type="Int32" />
+    <NavigationProperty Name="tb_ingredientes" Relationship="Self.FK__tb_receta__id_in__21B6055D" FromRole="tb_receta" ToRole="tb_ingredientes" />
+    <NavigationProperty Name="tb_plato" Relationship="Self.FK__tb_receta__id_pl__20C1E124" FromRole="tb_receta" ToRole="tb_plato" />
+  </EntityType>
+  <EntityType Name="tb_tipo">
+    <Key>
+      <PropertyRef Name="id_tipo" />
+    </Key>
+    <Property Name="id_tipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="desc_tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tb_plato" Relationship="Self.FK__tb_plato__id_tip__173876EA" FromRole="tb_tipo" ToRole="tb_plato" />
+  </EntityType>
+  <Association Name="FK__tb_ingred__id_me__1273C1CD">
+    <End Role="tb_medida" Type="Self.tb_medida" Multiplicity="1" />
+    <End Role="tb_ingredientes" Type="Self.tb_ingredientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_medida">
+        <PropertyRef Name="id_med" />
+      </Principal>
+      <Dependent Role="tb_ingredientes">
+        <PropertyRef Name="id_med" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_receta__id_in__21B6055D">
+    <End Role="tb_ingredientes" Type="Self.tb_ingredientes" Multiplicity="1" />
+    <End Role="tb_receta" Type="Self.tb_receta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_ingredientes">
+        <PropertyRef Name="id_ing" />
+      </Principal>
+      <Dependent Role="tb_receta">
+        <PropertyRef Name="id_ing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_plato__id_tip__173876EA">
+    <End Role="tb_tipo" Type="Self.tb_tipo" Multiplicity="1" />
+    <End Role="tb_plato" Type="Self.tb_plato" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_tipo">
+        <PropertyRef Name="id_tipo" />
+      </Principal>
+      <Dependent Role="tb_plato">
+        <PropertyRef Name="id_tipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_receta__id_pl__20C1E124">
+    <End Role="tb_plato" Type="Self.tb_plato" Multiplicity="1" />
+    <End Role="tb_receta" Type="Self.tb_receta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_plato">
+        <PropertyRef Name="id_plato" />
+      </Principal>
+      <Dependent Role="tb_receta">
+        <PropertyRef Name="id_plato" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tb_detalleMenu">
+    <End Role="tb_menu" Type="Self.tb_menu" Multiplicity="*" />
+    <End Role="tb_plato" Type="Self.tb_plato" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="BD_BelaaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="logueo" EntityType="Self.logueo" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="tb_ingredientes" EntityType="Self.tb_ingredientes" />
+    <EntitySet Name="tb_medida" EntityType="Self.tb_medida" />
+    <EntitySet Name="tb_menu" EntityType="Self.tb_menu" />
+    <EntitySet Name="tb_plato" EntityType="Self.tb_plato" />
+    <EntitySet Name="tb_receta" EntityType="Self.tb_receta" />
+    <EntitySet Name="tb_tipo" EntityType="Self.tb_tipo" />
+    <AssociationSet Name="FK__tb_ingred__id_me__1273C1CD" Association="Self.FK__tb_ingred__id_me__1273C1CD">
+      <End Role="tb_medida" EntitySet="tb_medida" />
+      <End Role="tb_ingredientes" EntitySet="tb_ingredientes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_receta__id_in__21B6055D" Association="Self.FK__tb_receta__id_in__21B6055D">
+      <End Role="tb_ingredientes" EntitySet="tb_ingredientes" />
+      <End Role="tb_receta" EntitySet="tb_receta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_plato__id_tip__173876EA" Association="Self.FK__tb_plato__id_tip__173876EA">
+      <End Role="tb_tipo" EntitySet="tb_tipo" />
+      <End Role="tb_plato" EntitySet="tb_plato" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_receta__id_pl__20C1E124" Association="Self.FK__tb_receta__id_pl__20C1E124">
+      <End Role="tb_plato" EntitySet="tb_plato" />
+      <End Role="tb_receta" EntitySet="tb_receta" />
+    </AssociationSet>
+    <AssociationSet Name="tb_detalleMenu" Association="Self.tb_detalleMenu">
+      <End Role="tb_menu" EntitySet="tb_menu" />
+      <End Role="tb_plato" EntitySet="tb_plato" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
